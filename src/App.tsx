@@ -1,5 +1,5 @@
 
-import CharacterList from "./components/CharacterList";
+import CharacterList from "./components/CharacterList.tsx";
 
 function App() {
    return  <div className="bg-dark text-white"> 
