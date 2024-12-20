@@ -4,12 +4,26 @@ import Character from "./Character"
 function NavPage(props) {
     return (
         <div className="d-flex justify-content-between align-items-center" >
+            
+            <button className="btn btn-primary btn-sm"
+                onClick={() => props.setPage(props.page - 1)}
+                disabled={props.page === 1}
+            >
+                RETURN 
+            </button>
+
+
             <p>Page: {props.page}</p>
+
             <button className="btn btn-primary btn-sm"
                 onClick={() => props.setPage(props.page + 1)}
+                disabled={props.page === props.totalPages}
             >
-                Page {props.page + 1}
+                NEXT 
+
             </button>
+
+
         </div>
     )
 }
@@ -28,8 +42,6 @@ function CharacterList() {
             setCharacter(data.results)
 
         }
-
-
         fetchData()
     }, [page])
 
@@ -50,12 +62,16 @@ function CharacterList() {
                             <div className="col-md-4" key={character.id}>
                                 <Character character={character} />
                             </div>
+                            
                         ))}
                     </div>
+                    
                 )}
             </div>
         
         <NavPage page={page} setPage={setPage} />
+        
+        
 
         </div>
     );
