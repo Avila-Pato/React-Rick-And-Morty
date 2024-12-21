@@ -3,13 +3,22 @@ import Character from "./Character";
 import NavPage from "./NavPage";
 
 function CharacterList() {
-  const [character, setCharacter] = useState([]);
+  interface Character {
+    id: number;
+    name: string;
+    gender: string;
+    image: string;
+    origin: {
+      name: string;
+    };
+  }
+
+  const [character, setCharacter] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [name, setName] = useState("");
-  const [gender, setGender] = useState("")
+  const [gender, setGender] = useState("");
 
-  
   useEffect(() => {
     async function fetchData() {
       try {
@@ -34,9 +43,9 @@ function CharacterList() {
   }, [name, character]);
 
   const filteredGender = useMemo(() => {
-    if(!gender ) return filteredCharacters
-    return filteredCharacters.filter((char) =>
-      char.gender.toLowerCase() === gender.toLowerCase()
+    if (!gender) return filteredCharacters;
+    return filteredCharacters.filter(
+      (char) => char.gender.toLowerCase() === gender.toLowerCase()
     );
   }, [gender, filteredCharacters]);
 
@@ -55,8 +64,13 @@ function CharacterList() {
         <option value="unknown">Desconocido</option>
       </select>
 
-      <input className="form-control" type="text" placeholder="Buscador…" readOnly onChange={(e) => setName(e.target.value)} />
-      <NavPage page={page} setPage={setPage} />
+      <input
+        className="form-control"
+        type="text"
+        placeholder="Buscador…"
+        onChange={(e) => setName(e.target.value)}
+      />
+      <NavPage page={page} setPage={setPage} totalPages={0}/>
 
       <div className="row">
         {filteredGender.map((character) => (
@@ -65,8 +79,8 @@ function CharacterList() {
           </div>
         ))}
       </div>
-      
-      <NavPage page={page} setPage={setPage} />
+
+      <NavPage page={page} setPage={setPage} totalPages={0} />
     </div>
   );
 }
